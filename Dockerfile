@@ -1,8 +1,8 @@
 # Dockerfile for a simple Nginx stream replicator
 
 # Separate build stage to keep build dependencies out of our final image
-ARG ALPINE_VERSION=alpine:3.8
-FROM ${ALPINE_VERSION}
+ARG FEDORA_VERSION=fedora:31
+FROM ${FEDORA_VERSION}
 
 # Software versions to build
 ARG NGINX_VERSION=nginx-1.15.8
@@ -10,7 +10,8 @@ ARG NGINX_RTMP_MODULE_VERSION=6f5487ada9848a66cc7a3ed375e404fc95cc5302
 
 # Install buildtime dependencies
 # Note: We build against LibreSSL instead of OpenSSL, because LibreSSL is already included in Alpine
-RUN apk --no-cache add build-base libressl-dev
+Run dnf update -y
+RUN dnf group install -y "Development Tools"; dnf install -y openssl-devel wget
 
 # Download sources
 # Note: We download our own fork of nginx-rtmp-module which contains some additional enhancements over the original version by arut
@@ -80,15 +81,16 @@ RUN cd /build/nginx && \
         --without-stream_upstream_random_module \
         --without-stream_upstream_zone_module \
         --with-ipv6 \
-        --add-module=/build/nginx-rtmp-module && \
-    make -j $(getconf _NPROCESSORS_ONLN)
+        --add-module=/build/nginx-rtmp-module \
+        --with-cc-opt=-Wno-error=implicit-fallthrough && \
+    make -j  $(getconf _NPROCESSORS_ONLN)
 
 # Final image stage
-FROM ${ALPINE_VERSION}
+FROM ${FEDORA_VERSION}
 
 # Set up group and user
-RUN addgroup -S nginx && \
-    adduser -s /sbin/nologin -G nginx -S -D -H nginx
+RUN groupadd -r nginx && \
+    useradd -s /sbin/nologin -g nginx -r nginx
 
 # Set up directories
 RUN mkdir -p /etc/nginx /var/log/nginx /var/www && \
