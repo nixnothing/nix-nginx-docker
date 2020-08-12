@@ -3,8 +3,8 @@ cloned from https://github.com/DvdGiessen/nginx-rtmp-docker for personal use
 nginx docker image with config for reverse proxy with use with other docker images and fedora packages
 original dockerfile was modified to build using fedora and config changes to nginx config with allow more use of other containers via reverse proxy configs
 
+Below is the original readme for the base nginx-rtmp-docker repo highlighting use of the base rtmp server features for nginx
 
-Below is the origial readme for the base ngingx-rtmp-docker repo highlighting use of base rtmp server features for nginx
 --------
 
 # nginx-rtmp-docker
