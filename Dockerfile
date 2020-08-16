@@ -11,7 +11,7 @@ ARG NGINX_RTMP_MODULE_VERSION=6f5487ada9848a66cc7a3ed375e404fc95cc5302
 # Install buildtime dependencies
 # Note: We build against LibreSSL instead of OpenSSL, because LibreSSL is already included in Alpine
 Run dnf update -y
-RUN dnf group install -y "Development Tools"; dnf install -y openssl-devel wget
+RUN dnf group install -y "Development Tools"; dnf install -y openssl-devel pcre-devel wget
 
 # Download sources
 # Note: We download our own fork of nginx-rtmp-module which contains some additional enhancements over the original version by arut
@@ -34,54 +34,55 @@ RUN cd /build/nginx && \
         --lock-path=/var/lock/nginx.lock \
         --http-client-body-temp-path=/tmp/nginx/client-body \
         --user=nginx --group=nginx \
-        --without-http-cache \
-        --without-http_access_module \
-        --without-http_auth_basic_module \
-        --without-http_autoindex_module \
-        --without-http_browser_module \
-        --without-http_charset_module \
-        --without-http_empty_gif_module \
-        --without-http_fastcgi_module \
-        --without-http_geo_module \
-        --without-http_grpc_module \
+#        --without-http-cache \
+#required omit        --without-http_access_module \
+#        --without-http_auth_basic_module \
+#        --without-http_autoindex_module \
+#        --without-http_browser_module \
+#        --without-http_charset_module \
+#        --without-http_empty_gif_module \
+#        --without-http_fastcgi_module \
+#        --without-http_geo_module \
+#        --without-http_grpc_module \
         --without-http_gzip_module \
-        --without-http_limit_conn_module \
-        --without-http_limit_req_module \
-        --without-http_map_module \
-        --without-http_memcached_module \
-        --without-http_mirror_module \
-        --without-http_proxy_module \
-        --without-http_referer_module \
-        --without-http_rewrite_module \
-        --without-http_scgi_module \
-        --without-http_split_clients_module \
-        --without-http_ssi_module \
-        --without-http_upstream_hash_module \
-        --without-http_upstream_ip_hash_module \
-        --without-http_upstream_keepalive_module \
-        --without-http_upstream_least_conn_module \
-        --without-http_upstream_random_module \
-        --without-http_upstream_zone_module \
-        --without-http_userid_module \
-        --without-http_uwsgi_module \
-        --without-mail_imap_module \
-        --without-mail_pop3_module \
-        --without-mail_smtp_module \
-        --without-pcre \
-        --without-poll_module \
-        --without-select_module \
-        --without-stream_access_module \
-        --without-stream_geo_module \
-        --without-stream_limit_conn_module \
-        --without-stream_map_module \
-        --without-stream_return_module \
-        --without-stream_split_clients_module \
-        --without-stream_upstream_hash_module \
-        --without-stream_upstream_least_conn_module \
-        --without-stream_upstream_random_module \
-        --without-stream_upstream_zone_module \
+#        --without-http_limit_conn_module \
+#        --without-http_limit_req_module \
+#        --without-http_map_module \
+#        --without-http_memcached_module \
+#        --without-http_mirror_module \
+#required omit        --without-http_proxy_module \
+#        --without-http_referer_module \
+#        --without-http_rewrite_module \
+#        --without-http_scgi_module \
+#        --without-http_split_clients_module \
+#        --without-http_ssi_module \
+#        --without-http_upstream_hash_module \
+#        --without-http_upstream_ip_hash_module \
+#        --without-http_upstream_keepalive_module \
+#        --without-http_upstream_least_conn_module \
+#        --without-http_upstream_random_module \
+#        --without-http_upstream_zone_module \
+#        --without-http_userid_module \
+#        --without-http_uwsgi_module \
+#        --without-mail_imap_module \
+#        --without-mail_pop3_module \
+#        --without-mail_smtp_module \
+#        --without-pcre \
+#        --without-poll_module \
+#        --without-select_module \
+#        --without-stream_access_module \
+#        --without-stream_geo_module \
+#        --without-stream_limit_conn_module \
+#        --without-stream_map_module \
+#        --without-stream_return_module \
+#        --without-stream_split_clients_module \
+#        --without-stream_upstream_hash_module \
+#        --without-stream_upstream_least_conn_module \
+#        --without-stream_upstream_random_module \
+#        --without-stream_upstream_zone_module \
         --with-ipv6 \
         --add-module=/build/nginx-rtmp-module \
+        --with-http_ssl_module \
         --with-cc-opt=-Wno-error=implicit-fallthrough && \
     make -j  $(getconf _NPROCESSORS_ONLN)
 
