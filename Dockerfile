@@ -1,4 +1,4 @@
-# Dockerfile for a simple Nginx stream replicator
+# Dockerfile for a Nginx w/ stream replicator
 
 # Separate build stage to keep build dependencies out of our final image
 ARG FEDORA_VERSION=fedora:31
@@ -11,7 +11,7 @@ ARG NGINX_RTMP_MODULE_VERSION=6f5487ada9848a66cc7a3ed375e404fc95cc5302
 # Install buildtime dependencies
 # Note: We build against LibreSSL instead of OpenSSL, because LibreSSL is already included in Alpine
 Run dnf update -y
-RUN dnf group install -y "Development Tools"; dnf install -y openssl-devel pcre-devel wget
+RUN dnf group install -y "Development Tools"; dnf install -y openssl-devel pcre-devel wget zlib-devel
 
 # Download sources
 # Note: We download our own fork of nginx-rtmp-module which contains some additional enhancements over the original version by arut
@@ -35,7 +35,6 @@ RUN cd /build/nginx && \
         --http-client-body-temp-path=/tmp/nginx/client-body \
         --user=nginx --group=nginx \
 #        --without-http-cache \
-#required omit        --without-http_access_module \
 #        --without-http_auth_basic_module \
 #        --without-http_autoindex_module \
 #        --without-http_browser_module \
@@ -44,13 +43,12 @@ RUN cd /build/nginx && \
 #        --without-http_fastcgi_module \
 #        --without-http_geo_module \
 #        --without-http_grpc_module \
-        --without-http_gzip_module \
+#        --without-http_gzip_module \
 #        --without-http_limit_conn_module \
 #        --without-http_limit_req_module \
 #        --without-http_map_module \
 #        --without-http_memcached_module \
 #        --without-http_mirror_module \
-#required omit        --without-http_proxy_module \
 #        --without-http_referer_module \
 #        --without-http_rewrite_module \
 #        --without-http_scgi_module \
