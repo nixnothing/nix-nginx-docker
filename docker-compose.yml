@@ -6,13 +6,12 @@ version: '3'
 services:
   reverse-proxy-rtmp:
     build: .
+    container_name: nginx-rtmp
     network_mode: "bridge"
-#    networks:
-#      nginx-network:
     ports:
       - "80:80"
-      - "1935:1935"
       - "443:443"
+      - "1935:1935"
     volumes:
       - ./data/nginx:/etc/nginx/conf.d
       - ./data/certbot/conf:/etc/letsencrypt
@@ -23,6 +22,7 @@ services:
 
   certbot:
     image: certbot/certbot
+    container_name: certbot
     network_mode: "bridge"
     volumes:
       - ./data/certbot/conf:/etc/letsencrypt
