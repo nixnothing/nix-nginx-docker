@@ -7,7 +7,7 @@ services:
   reverse-proxy-rtmp:
     build: .
     container_name: nginx-rtmp
-    network_mode: "bridge"
+    network_mode: "host"
 #    ports:
 #      - "80:80"
 #      - "443:443"
@@ -33,7 +33,7 @@ services:
   plex:
     image: linuxserver/plex
     container_name: plex
-    network_mode: "bridge"
+    network_mode: "host"
 #    ports:
 #      - "32400:32400"
 #      - "1900:1900/udp"
