@@ -116,3 +116,6 @@ RUN chmod 550 /usr/local/sbin/nginx
 # Set up config file
 COPY nginx.conf /etc/nginx/nginx.conf
 RUN chmod 444 /etc/nginx/nginx.conf
+
+# test
+RUN dnf install -y iputils net-tools iproute
