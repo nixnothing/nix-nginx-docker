@@ -23,7 +23,7 @@ services:
   certbot:
     image: certbot/certbot
     container_name: certbot
-    network_mode: "bridge"
+    network_mode: "host"
     volumes:
       - ./data/certbot/conf:/etc/letsencrypt
       - ./data/certbot/www:/var/www/certbot
