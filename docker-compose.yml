@@ -17,13 +17,15 @@ services:
       - ./data/certbot/conf:/etc/letsencrypt
       - ./data/certbot/www:/var/www/certbot
       - /nas:/nas
+      - ./data/stream:/stream
     command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
     restart: always
 
   certbot:
     image: certbot/certbot
     container_name: certbot
-    network_mode: "host"
+    network_mode: "bridge"
+#needs to be bridge to run init script
     volumes:
       - ./data/certbot/conf:/etc/letsencrypt
       - ./data/certbot/www:/var/www/certbot
@@ -58,6 +60,7 @@ services:
       - /nas/cartoons:/cartoons
       - /nas/documentaries:/documentaries
       - /nas/family_photos:/family_photos
+      - /nas/anime_movies:/anime_movies
     restart: unless-stopped
 
 
