@@ -18,6 +18,8 @@ services:
       - ./data/certbot/www:/var/www/certbot
       - /nas:/nas
       - ./data/stream:/stream
+#below added
+      - ./nginx.conf:/etc/nginx/nginx.conf
     command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
     restart: always
 
@@ -56,6 +58,7 @@ services:
       - /nas/.config:/config
       - /nas/tv:/tv
       - /nas/movies:/movies
+      - /nas/music:/music
       - /nas/anime:/anime
       - /nas/cartoons:/cartoons
       - /nas/documentaries:/documentaries

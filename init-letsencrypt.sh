@@ -6,7 +6,7 @@ if ! [ -x "$(command -v docker-compose)" ]; then
   exit 1
 fi
 
-domains=(cloud.nixnothing.com chat.nixnothing.com nas.nixnothing.com stream.nixnothing.com)
+domains=(cloud.nixnothing.com chat.nixnothing.com nas.nixnothing.com stream.nixnothing.com plex.nixnothing.com www.nixnothing.com nixnothing.com)
 rsa_key_size=4096
 data_path="./data/certbot"
 email="vizgix@gmail.com" # Adding a valid address is strongly recommended
